@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import styled from "styled-components";
 
 import DirectoryMenu from "../components/directory-menu";
@@ -11,7 +11,14 @@ const HomePageStyled = styled.div`
 
 const HomePage = () => (
   <HomePageStyled>
-    <DirectoryMenu />
+    <Profiler
+      id="Directory"
+      onRender={(id, phase, actualDuration) => {
+        console.log({ id, phase, actualDuration });
+      }}
+    >
+      <DirectoryMenu />
+    </Profiler>
   </HomePageStyled>
 );
 
