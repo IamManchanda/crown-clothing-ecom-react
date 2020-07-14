@@ -2,32 +2,57 @@
   "hosting": {
     "public": "build",
     "headers": [{
-      "source": "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
-      "headers": [{
-        "key": "Access-Control-Allow-Origin",
-        "value": "*"
-      }]
-    }, {
-      "source": "**/*.@(js|css)",
-      "headers": [{
-        "key": "Cache-Control",
-        "value": "max-age=2592000"
-      }]
-    }, {
-      "source": "**/*.@(jpg|jpeg|gif|png)",
-      "headers": [{
-        "key": "Cache-Control",
-        "value": "max-age=2592000"
-      }]
-    }],
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+        "source": "**/*.@(eot|otf|ttf|ttc|woff|font.css)",
+        "headers": [{
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }]
+      },
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [{
+          "key": "Cache-Control",
+          "value": "max-age=2592000"
+        }]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png)",
+        "headers": [{
+          "key": "Cache-Control",
+          "value": "max-age=2592000"
+        }]
+      }
     ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [{
-      "source": "**",
-      "destination": "/index.html"
-    }]
+        "source": "**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/auth",
+        "destination": "/auth/index.html"
+      }, {
+        "source": "/checkout",
+        "destination": "/checkout/index.html"
+      }, {
+        "source": "/shop",
+        "destination": "/shop/index.html"
+      }, {
+        "source": "/shop/hats",
+        "destination": "/shop/hats/index.html"
+      }, {
+        "source": "/shop/jackets",
+        "destination": "/shop/jackets/index.html"
+      }, {
+        "source": "/shop/mens",
+        "destination": "/shop/mens/index.html"
+      }, {
+        "source": "/shop/sneakers",
+        "destination": "/shop/sneakers/index.html"
+      }, {
+        "source": "/shop/womens",
+        "destination": "/shop/womens/index.html"
+      }
+    ]
   }
 }
