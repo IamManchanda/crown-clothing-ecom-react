@@ -26,9 +26,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "rm -rf build/",
     "build": "react-scripts build",
+    "postbuild": "react-snap",
     "deploy": "npm run build && firebase deploy",
-    "deploy:local": "npm run build && serve -s build",
+    "deploy:local": "npm run build && serve -s build -l 3005",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -47,7 +49,22 @@
       "last 1 safari version"
     ]
   },
+  "reactSnap": {
+    "inlineCss": true,
+    "include": [
+      "/",
+      "/auth",
+      "/checkout",
+      "/shop",
+      "/shop/hats",
+      "/shop/sneakers",
+      "/shop/jackets",
+      "/shop/womens",
+      "/shop/mens"
+    ]
+  },
   "devDependencies": {
+    "react-snap": "1.10.0",
     "serve": "^11.3.2"
   }
 }
