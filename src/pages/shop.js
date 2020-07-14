@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect, lazy, Suspense } from "react";
+import React, { Fragment, useEffect, lazy, Suspense, memo } from "react";
+import { PrerenderedComponent } from "react-prerendered-component";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -9,10 +10,27 @@ import {
 } from "../components/with-spinner";
 import ErrorBoundary from "../components/error-boundary";
 
-const CollectionsOverviewWithContainer = lazy(() =>
+const prefetchMap = new WeakMap();
+const prefetchLazy = (LazyComponent) => {
+  if (!prefetchMap.has(LazyComponent)) {
+    prefetchMap.set(LazyComponent, LazyComponent._ctor());
+  }
+  return prefetchMap.get(LazyComponent);
+};
+
+const prerenderedLazy = (dynamicImport) => {
+  const LazyComponent = lazy(dynamicImport);
+  return memo((props) => (
+    <PrerenderedComponent live={prefetchLazy(LazyComponent)}>
+      <LazyComponent {...props} />
+    </PrerenderedComponent>
+  ));
+};
+
+const CollectionsOverviewWithContainer = prerenderedLazy(() =>
   import("../components/collections-overview/with-container"),
 );
-const CollectionPageWithContainer = lazy(() =>
+const CollectionPageWithContainer = prerenderedLazy(() =>
   import("../components/collection-page/with-container"),
 );
 

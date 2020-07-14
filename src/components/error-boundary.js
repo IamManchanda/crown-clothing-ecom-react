@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-const ErrorBoundaryStyled = styled.div`
+export const ErrorBoundaryStyled = styled.div`
   height: 60vh;
   width: 100%;
   display: flex;
@@ -10,7 +10,7 @@ const ErrorBoundaryStyled = styled.div`
   align-items: center;
 `;
 
-const ErrorImageWrapperStyled = styled.div`
+export const ErrorImageWrapperStyled = styled.div`
   display: inline-block;
   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
   background-size: cover;
@@ -19,7 +19,7 @@ const ErrorImageWrapperStyled = styled.div`
   height: 40vh;
 `;
 
-const ErrorImageTextStyled = styled.h2`
+export const ErrorImageTextStyled = styled.h2`
   font-size: 28px;
   color: #2f8e89;
 `;

@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect, lazy, Suspense } from "react";
+import React, { Fragment, useEffect, lazy, Suspense, memo } from "react";
+import { PrerenderedComponent } from "react-prerendered-component";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -9,10 +10,27 @@ import { checkUserSession } from "./store/user/user.actions";
 import { SpinnerOverlayStyled, SpinnerStyled } from "./components/with-spinner";
 import ErrorBoundary from "./components/error-boundary";
 
-const HomePage = lazy(() => import("./pages/index"));
-const ShopPage = lazy(() => import("./pages/shop"));
-const AuthPage = lazy(() => import("./pages/auth"));
-const CheckoutPage = lazy(() => import("./pages/checkout"));
+const prefetchMap = new WeakMap();
+const prefetchLazy = (LazyComponent) => {
+  if (!prefetchMap.has(LazyComponent)) {
+    prefetchMap.set(LazyComponent, LazyComponent._ctor());
+  }
+  return prefetchMap.get(LazyComponent);
+};
+
+const prerenderedLazy = (dynamicImport) => {
+  const LazyComponent = lazy(dynamicImport);
+  return memo((props) => (
+    <PrerenderedComponent live={prefetchLazy(LazyComponent)}>
+      <LazyComponent {...props} />
+    </PrerenderedComponent>
+  ));
+};
+
+const HomePage = prerenderedLazy(() => import("./pages/index"));
+const ShopPage = prerenderedLazy(() => import("./pages/shop"));
+const AuthPage = prerenderedLazy(() => import("./pages/auth"));
+const CheckoutPage = prerenderedLazy(() => import("./pages/checkout"));
 
 const App = ({ currentUser, checkUserSession }) => {
   useEffect(() => {
